@@ -14,7 +14,7 @@ It is intended to be a learning and demonstration tool for my **C# and .NET desi
 I am also using it as a springboard to learn **Git** development on the command line. **All commits to this project have been made in the Linux terminal via Bash commands**.
 
 ## Features
-- You can create and manage different types of animal pens, of which each pen consists of one type of animal each (e.g. Pen<Lion>, Pen<Tiger>)
+- You can create and manage different types of animal pens, of which each pen consists of one type of animal each (e.g. Pen\<Lion>, Pen\<Tiger>)
 - You can add new animals with a name and age
 - Navigate menus of the application using keyboard input
 - Strong separation of concerns (Zoo, ZooRepository, Animal, Pen) etc. grouped into clean interfaces (IMenuable, IListlike)
