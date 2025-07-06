@@ -1,5 +1,6 @@
 public interface IMenuable
 {
-    public void HandleMenu();
-    public void HandleSelection();
+    public void HandleMenu(int itemID);
+    public void HandleSelection(int itemID);
+
 }

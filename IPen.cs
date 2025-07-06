@@ -1,4 +1,4 @@
-public interface IPen : IMenuable, IListlike
+public interface IPen : IListlike, IMenuable
 {
     public string Describe();
 }

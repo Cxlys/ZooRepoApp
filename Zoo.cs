@@ -12,7 +12,7 @@ class Zoo : IMenuable
         }
     }
 
-    public void HandleMenu()
+    public void HandleMenu(int itemID = -1)
     {
         Console.WriteLine("\nPlease select an option:");
         Console.WriteLine("1. List all pens");
@@ -22,7 +22,7 @@ class Zoo : IMenuable
         HandleSelection();
     }
 
-    public void HandleSelection()
+    public void HandleSelection(int itemID = -1)
     {
         bool check = false;
         while (!check)
@@ -39,7 +39,10 @@ class Zoo : IMenuable
                     break;
 
                 case 2:
-                    Repository.HandleMenu();
+                    Repository.HandleListMenu();
+                    break;
+
+                case -1:
                     break;
 
                 default:
