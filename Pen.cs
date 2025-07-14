@@ -69,7 +69,7 @@ class Pen<T>(string name) : IPen where T : Animal, new()
         }
         else
         {
-            Console.WriteLine("\nPen does not exist! Please try again.");
+            Console.WriteLine("\nAnimal does not exist! Please try again.");
             return -1;
         }
     }
@@ -77,10 +77,11 @@ class Pen<T>(string name) : IPen where T : Animal, new()
     public void HandleMenu(int itemID)
     {
         Console.WriteLine($"\nYou have selected animal {itemID}.");
-        Console.WriteLine("What would you like to do with this pen?");
-        Console.WriteLine("1. List all animals");
-        Console.WriteLine("2. Select an animal");
-        Console.WriteLine("3. Delete this pen");
+        Console.WriteLine($"Name: {Animals[itemID - 1].Name}, Age: {Animals[itemID - 1].Age}");
+        Console.WriteLine("What would you like to do with this animal?");
+        Console.WriteLine("1. Change its name");
+        Console.WriteLine("2. Change its age");
+        Console.WriteLine("3. Delete this animal");
         Console.WriteLine("X. Return to the main menu.");
 
         HandleSelection(itemID);

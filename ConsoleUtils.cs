@@ -30,4 +30,28 @@ static class ConsoleUtils
             }
         }
     }
+
+    public static bool GetResponse(out string response)
+    {
+        while (true)
+        {
+            Console.WriteLine("\nPlease type your value below:");
+            string? input = Console.ReadLine();
+
+            if (input == null)
+            {
+                Console.WriteLine("Invalid input, please try again.");
+            }
+            else if (input.Equals("X", StringComparison.CurrentCultureIgnoreCase))
+            {
+                response = "";
+                return false;
+            }
+            else
+            {
+                response = input;
+                return true;
+            }
+        }
+    }
 }

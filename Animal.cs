@@ -1,4 +1,4 @@
-abstract class Animal : IEats, ISpeaks, IMenuable
+abstract class Animal : Item, IEats, ISpeaks
 {
     public string Name;
     public int Age;
@@ -12,40 +12,29 @@ abstract class Animal : IEats, ISpeaks, IMenuable
     public void Eat() { }
     public void Speak() { }
 
-    public void HandleMenu()
+    public void ChangeNameByInput()
     {
-        Console.WriteLine("\nWhat would you like to do?");
-        Console.WriteLine("1. Change name");
-        Console.WriteLine("2. Change age");
-        Console.WriteLine("X. Return to main menu.");
+        Console.WriteLine($"Please input a new name for {Name}; input X to quit:");
+        bool success = ConsoleUtils.GetResponse(out string response);
 
-        HandleSelection();
-    }
-
-    public void HandleSelection()
-    {
-        bool check = false;
-        while (!check)
+        if (!CheckValidity(response) || !success)
         {
-            Console.WriteLine("\nPlease make a selection:");
-            bool success = ConsoleUtils.GetIntResponse(out int response);
-
-            if (!success) break;
-
-            switch (response)
-            {
-                case 1:
-                    break;
-
-                case 2:
-                    break;
-
-                default:
-                    Console.WriteLine("Invalid input, please try again.");
-                    continue;
-            }
-
-            check = true;
+            return;
         }
+
+        Name = response;
+    }   
+
+    public void ChangeAgeByInput()
+    {
+        Console.WriteLine($"Please input a new age for {Name}; input X to quit:");
+        bool success = ConsoleUtils.GetIntResponse(out int response);
+
+        if (!CheckValidity(response.ToString()) || !success)
+        {
+            return;
+        }
+
+        Age = response;
     }
 }
