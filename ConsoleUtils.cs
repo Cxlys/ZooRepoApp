@@ -7,7 +7,7 @@ static class ConsoleUtils
     {
         while (true)
         {
-            Console.WriteLine("\nPlease type your value below:");
+            Console.WriteLine("\nPlease type your value below, or \"X\" if you would like to back out:");
             string? input = Console.ReadLine();
 
             if (input == null)
@@ -35,7 +35,7 @@ static class ConsoleUtils
     {
         while (true)
         {
-            Console.WriteLine("\nPlease type your value below:");
+            Console.WriteLine("\nPlease type your value below, or \"X\" if you would like to back out:");
             string? input = Console.ReadLine();
 
             if (input == null)

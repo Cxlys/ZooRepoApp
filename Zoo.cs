@@ -17,6 +17,7 @@ class Zoo : IMenuable
         Console.WriteLine("\nPlease select an option:");
         Console.WriteLine("1. List all pens");
         Console.WriteLine("2. Select a pen");
+        Console.WriteLine("3. Add a new pen");
         Console.WriteLine("X. Exit the application");
 
         HandleSelection();
@@ -24,8 +25,8 @@ class Zoo : IMenuable
 
     public void HandleSelection(int itemID = -1)
     {
-        bool check = false;
-        while (!check)
+        bool exit = false;
+        while (!exit)
         {
             Console.WriteLine("\nPlease make a selection:");
             bool success = ConsoleUtils.GetIntResponse(out int response);
@@ -42,15 +43,18 @@ class Zoo : IMenuable
                     Repository.HandleListMenu();
                     break;
 
+                case 3:
+                    Repository.AddByUserInput();
+                    break;
+
                 case -1:
+                    exit = true;
                     break;
 
                 default:
                     Console.WriteLine("Invalid input, please try again.");
-                    continue;
+                    break;
             }
-
-            check = true;
         }
     }
 

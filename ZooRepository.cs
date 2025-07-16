@@ -1,4 +1,5 @@
 using System.ComponentModel.Design;
+using System.Reflection;
 
 class ZooRepository : IListlike, IMenuable
 {
@@ -11,6 +12,23 @@ class ZooRepository : IListlike, IMenuable
         {
             Console.WriteLine($"{i + 1}. {Pens[i].Describe()}");
         }
+    }
+
+    public void AddByUserInput()
+    {
+        Console.WriteLine($"\nPlease enter a name for your new pen.");
+        if (!ConsoleUtils.GetResponse(out string localName)) return;
+
+        Console.WriteLine($"What type of animals would you like to store in {localName}?");
+        if (!Animal.SelectType(out Type chosenSpecies)) return;
+
+        Type genericType = typeof(Pen<>).MakeGenericType(chosenSpecies);
+        IPen? pen = (IPen?) Activator.CreateInstance(genericType, localName);
+
+        if (pen == null) return;
+
+        Pens.Add(pen);
+        Console.WriteLine($"Successfully added {localName}"!);
     }
 
     public void AddNewPen<T>(string name) where T : Animal, new()
@@ -58,11 +76,12 @@ class ZooRepository : IListlike, IMenuable
 
     public void HandleMenu(int itemID)
     {
-        Console.WriteLine($"\nYou have selected pen {itemID}.");
+        Console.WriteLine($"You have selected pen {itemID}: \n{Pens[itemID - 1].Describe()}");
         Console.WriteLine("What would you like to do with this pen?");
         Console.WriteLine("1. List all animals");
         Console.WriteLine("2. Select an animal");
-        Console.WriteLine("3. Delete this pen");
+        Console.WriteLine("3. Add a new animal");
+        Console.WriteLine("5. Delete this pen");
         Console.WriteLine("X. Return to the main menu.");
 
         HandleSelection(itemID);
@@ -70,37 +89,42 @@ class ZooRepository : IListlike, IMenuable
 
     public void HandleSelection(int itemID)
     {
-        bool check = false;
-        while (!check)
+        bool exit = false;
+        while (!exit)
         {
             Console.WriteLine("\nPlease make a selection:");
             bool success = ConsoleUtils.GetIntResponse(out int response);
 
             if (!success) break;
 
+            IPen Pen = Pens[itemID - 1];
+
             switch (response)
             {
                 case 1:
-                    Pens[itemID - 1].ListAllItems();
+                    Pen.ListAllItems();
                     break;
 
                 case 2:
-                    Pens[itemID - 1].HandleListMenu();
+                    Pen.HandleListMenu();
                     break;
 
                 case 3:
+                    Pen.AddByUserInput();
+                    break;
+
+                case 5:
                     Pens.RemoveAt(itemID - 1);
                     break;
 
                 case -1:
+                    exit = true;
                     break;
 
                 default:
                     Console.WriteLine("Invalid input, please try again.");
-                    continue;
+                    break;
             }
-
-            check = true;
         }
     }
 }

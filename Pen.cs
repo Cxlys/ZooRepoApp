@@ -1,22 +1,35 @@
 using System.Net;
 using System.Runtime.InteropServices;
+using System.Security.Cryptography;
 
 class Pen<T>(string name) : IPen where T : Animal, new()
 {
     string Name = name;
-    List<T> Animals { get; set; } = new();
+    List<T> Animals = new();
 
     public string Describe()
     {
         return $"{Name}, containing {Animals.Count} animals of type {typeof(T).Name}";
     }
 
-    public void Add(T animal)
+    public string GetName() => Name;
+
+    public void AddByUserInput()
     {
-        Animals.Add(animal);
+        Console.WriteLine($"\nPlease enter a name for this {typeof(T)}.");
+        if (!ConsoleUtils.GetResponse(out string localName)) return;
+
+        Console.WriteLine($"\nPlease enter an age for this {typeof(T)}.");
+        if (!ConsoleUtils.GetIntResponse(out int localAge)) return;
+
+        T? Animal = (T?)Activator.CreateInstance(typeof(T), localName, localAge);
+
+        if (Animal == null) return;
+        Animals.Add(Animal);
+        Console.WriteLine($"Successfully added {localName}"!);
     }
 
-    public void Remove(string name)
+    public void RemoveByName(string name)
     {
         foreach (T animal in Animals)
         {
@@ -72,6 +85,9 @@ class Pen<T>(string name) : IPen where T : Animal, new()
             Console.WriteLine("\nAnimal does not exist! Please try again.");
             return -1;
         }
+
+        // Could also do below, but is harder to read + doesn't allow console writing
+        // return (response <= Animals.Count + 1 || !success) ? response : -1;
     }
 
     public void HandleMenu(int itemID)
@@ -81,7 +97,9 @@ class Pen<T>(string name) : IPen where T : Animal, new()
         Console.WriteLine("What would you like to do with this animal?");
         Console.WriteLine("1. Change its name");
         Console.WriteLine("2. Change its age");
-        Console.WriteLine("3. Delete this animal");
+        Console.WriteLine("3. Eat!");
+        Console.WriteLine("4. Speak!");
+        Console.WriteLine("5. Delete this animal");
         Console.WriteLine("X. Return to the main menu.");
 
         HandleSelection(itemID);
@@ -89,37 +107,47 @@ class Pen<T>(string name) : IPen where T : Animal, new()
     
     public void HandleSelection(int itemID)
     {
-        bool check = false;
-        while (!check)
+        bool exit = false;
+        while (!exit)
         {
             Console.WriteLine("\nPlease make a selection:");
             bool success = ConsoleUtils.GetIntResponse(out int response);
 
             if (!success) break;
 
+            int animalIndex = itemID - 1;
+            T animal = Animals[animalIndex];
+
             switch (response)
             {
                 case 1:
-                    
+                    animal.ChangeNameByInput();
                     break;
 
                 case 2:
-                    
+                    animal.ChangeAgeByInput();
                     break;
 
                 case 3:
-                    
+                    animal.Eat();
+                    break;
+
+                case 4:
+                    animal.Speak();
+                    break;
+
+                case 5:
+                    Animals.RemoveAt(animalIndex);
                     break;
 
                 case -1:
+                    exit = true;
                     break;
 
                 default:
                     Console.WriteLine("Invalid input, please try again.");
                     continue;
             }
-
-            check = true;
         }
     }
 }
