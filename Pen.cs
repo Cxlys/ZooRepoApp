@@ -2,17 +2,14 @@ using System.Net;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 
-class Pen<T>(string name) : IPen where T : Animal, new()
+class Pen<T>(string name) : Item(name), IPen where T : Animal, new()
 {
-    string Name = name;
-    List<T> Animals = new();
+    List<T> Animals = [];
 
     public string Describe()
     {
         return $"{Name}, containing {Animals.Count} animals of type {typeof(T).Name}";
     }
-
-    public string GetName() => Name;
 
     public void AddByUserInput()
     {
@@ -23,8 +20,8 @@ class Pen<T>(string name) : IPen where T : Animal, new()
         if (!ConsoleUtils.GetIntResponse(out int localAge)) return;
 
         T? Animal = (T?)Activator.CreateInstance(typeof(T), localName, localAge);
-
         if (Animal == null) return;
+
         Animals.Add(Animal);
         Console.WriteLine($"Successfully added {localName}"!);
     }
