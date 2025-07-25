@@ -4,7 +4,7 @@ using System.Security.Cryptography;
 
 class Pen<T>(string name) : Item(name), IPen where T : Animal, new()
 {
-    List<T> Animals = [];
+    readonly List<T> Animals = [];
 
     public string Describe()
     {

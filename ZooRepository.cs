@@ -3,7 +3,7 @@ using System.Reflection;
 
 class ZooRepository : IListlike, IMenuable
 {
-    List<IPen> Pens = [];
+    readonly List<IPen> Pens = [];
 
     public void ListAllItems()
     {
@@ -20,7 +20,7 @@ class ZooRepository : IListlike, IMenuable
         if (!ConsoleUtils.GetResponse(out string localName)) return;
 
         Console.WriteLine($"What type of animals would you like to store in {localName}?");
-        if (!Animal.SelectType(out Type chosenSpecies)) return;
+        if (!Animal.SelectType(out Type? chosenSpecies) || chosenSpecies == null) return;
 
         Type genericType = typeof(Pen<>).MakeGenericType(chosenSpecies);
         IPen? pen = (IPen?) Activator.CreateInstance(genericType, localName);
@@ -31,7 +31,7 @@ class ZooRepository : IListlike, IMenuable
         Console.WriteLine($"Successfully added {localName}"!);
     }
 
-    public void AddNewPen<T>(string name) where T : Animal, new()
+    void AddNewPen<T>(string name) where T : Animal, new()
     {
         Pen<T> pen = new(name);
         Pens.Add(pen);
@@ -49,11 +49,13 @@ class ZooRepository : IListlike, IMenuable
 
         int res = HandleListSelection();
 
+        // TODO: Add error checking for listlikes
         if (res != -1)
         {
             HandleMenu(res);
         }
     }
+
 
     public int HandleListSelection()
     {
