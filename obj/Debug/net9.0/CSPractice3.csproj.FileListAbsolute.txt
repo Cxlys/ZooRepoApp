@@ -1,0 +1,15 @@
+/home/dcasley/Documents/Projects/ZooSimApp/bin/Debug/net9.0/CSPractice3
+/home/dcasley/Documents/Projects/ZooSimApp/bin/Debug/net9.0/CSPractice3.deps.json
+/home/dcasley/Documents/Projects/ZooSimApp/bin/Debug/net9.0/CSPractice3.runtimeconfig.json
+/home/dcasley/Documents/Projects/ZooSimApp/bin/Debug/net9.0/CSPractice3.dll
+/home/dcasley/Documents/Projects/ZooSimApp/bin/Debug/net9.0/CSPractice3.pdb
+/home/dcasley/Documents/Projects/ZooSimApp/obj/Debug/net9.0/CSPractice3.GeneratedMSBuildEditorConfig.editorconfig
+/home/dcasley/Documents/Projects/ZooSimApp/obj/Debug/net9.0/CSPractice3.AssemblyInfoInputs.cache
+/home/dcasley/Documents/Projects/ZooSimApp/obj/Debug/net9.0/CSPractice3.AssemblyInfo.cs
+/home/dcasley/Documents/Projects/ZooSimApp/obj/Debug/net9.0/CSPractice3.csproj.CoreCompileInputs.cache
+/home/dcasley/Documents/Projects/ZooSimApp/obj/Debug/net9.0/CSPractice3.sourcelink.json
+/home/dcasley/Documents/Projects/ZooSimApp/obj/Debug/net9.0/CSPractice3.dll
+/home/dcasley/Documents/Projects/ZooSimApp/obj/Debug/net9.0/refint/CSPractice3.dll
+/home/dcasley/Documents/Projects/ZooSimApp/obj/Debug/net9.0/CSPractice3.pdb
+/home/dcasley/Documents/Projects/ZooSimApp/obj/Debug/net9.0/CSPractice3.genruntimeconfig.cache
+/home/dcasley/Documents/Projects/ZooSimApp/obj/Debug/net9.0/ref/CSPractice3.dll

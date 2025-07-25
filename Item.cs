@@ -1,4 +1,4 @@
-abstract class Item(string name)
+public abstract class Item(string name)
 {
     public string Name { get; private set; } = name;
 
@@ -6,7 +6,7 @@ abstract class Item(string name)
     {
         Console.WriteLine($"Please input a new name for {Name}; input X to quit:");
 
-        if (!ConsoleUtils.GetResponse(out string response) || !CheckValidity(response))
+        if (!ConsoleUtils.GetResponse(out string response) || !ConsoleUtils.CheckValidity(response))
         {
             return;
         }
@@ -14,30 +14,27 @@ abstract class Item(string name)
         Name = response;
     }
 
-    protected static bool CheckValidity(string value)
+    public static bool SelectType(out Type? chosenSpecies)
     {
-        Console.WriteLine($"\nYou have selected {value}. Would you like to continue? Y/N");
+        List<Type> subclasses = [.. typeof(Animal).Assembly.GetTypes()
+            .Where(type => type.IsSubclassOf(typeof(Animal)))
+        ];
 
-        while (true)
+        Console.WriteLine("\nPlease select an animal type from among the following choices:");
+
+        for (int i = 1; i <= subclasses.Count; i++)
         {
-            string? input = Console.ReadLine();
-
-            if (input != null)
-            {
-                switch (input.ToUpper())
-                {
-                    case "Y":
-                        return true;
-
-                    case "N":
-                        return false;
-
-                    default:
-                        break;
-                }
-            }
-
-            Console.WriteLine("Invalid input, please try again.");
+            Console.WriteLine($"{i}. {subclasses[i - 1].Name}");
         }
+
+        if (!ConsoleUtils.GetIntResponse(out int response)
+        || response >= subclasses.Count && response <= 0)
+        {
+            chosenSpecies = null;
+            return false;
+        }
+
+        chosenSpecies = subclasses[response - 1];
+        return true;
     }
 }

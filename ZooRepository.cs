@@ -5,13 +5,21 @@ class ZooRepository : IListlike, IMenuable
 {
     readonly List<IPen> Pens = [];
 
-    public void ListAllItems()
+    public bool ListAllItems()
     {
+        if (Pens.Count <= 0)
+        {
+            Console.WriteLine("No pens currently exist.");
+            return false;
+        }
+
         Console.WriteLine(""); // Just a newline for some space 
         for (int i = 0; i < Pens.Count; i++)
         {
             Console.WriteLine($"{i + 1}. {Pens[i].Describe()}");
         }
+
+        return true;
     }
 
     public void AddByUserInput()
@@ -20,7 +28,7 @@ class ZooRepository : IListlike, IMenuable
         if (!ConsoleUtils.GetResponse(out string localName)) return;
 
         Console.WriteLine($"What type of animals would you like to store in {localName}?");
-        if (!Animal.SelectType(out Type? chosenSpecies) || chosenSpecies == null) return;
+        if (!Item.SelectType(out Type? chosenSpecies) || chosenSpecies == null || !ConsoleUtils.CheckValidity($"{localName}, and {chosenSpecies.Name}")) return;
 
         Type genericType = typeof(Pen<>).MakeGenericType(chosenSpecies);
         IPen? pen = (IPen?) Activator.CreateInstance(genericType, localName);
@@ -39,7 +47,8 @@ class ZooRepository : IListlike, IMenuable
 
     public void HandleListMenu()
     {
-        ListAllItems();
+        if (!ListAllItems()) return;
+
         Console.WriteLine(
             "\n" +
             "X. Return to the main menu." +
@@ -49,13 +58,11 @@ class ZooRepository : IListlike, IMenuable
 
         int res = HandleListSelection();
 
-        // TODO: Add error checking for listlikes
-        if (res != -1)
+        if (res != -1 && res <= Pens.Count)
         {
             HandleMenu(res);
         }
     }
-
 
     public int HandleListSelection()
     {
@@ -64,7 +71,7 @@ class ZooRepository : IListlike, IMenuable
         // If the user has chosen to exit the application, return to the main menu.
         if (!success) return -1;
 
-        if (response <= Pens.Count + 1)
+        if (response <= Pens.Count)
         {
             // The response is valid, and we will select a pen from the repository.
             return response;

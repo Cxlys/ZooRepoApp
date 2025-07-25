@@ -2,7 +2,7 @@ using System.Net;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 
-class Pen<T>(string name) : Item(name), IPen where T : Animal, new()
+public class Pen<T>(string name) : Item(name), IPen where T : Animal
 {
     readonly List<T> Animals = [];
 
@@ -13,10 +13,10 @@ class Pen<T>(string name) : Item(name), IPen where T : Animal, new()
 
     public void AddByUserInput()
     {
-        Console.WriteLine($"\nPlease enter a name for this {typeof(T)}.");
+        Console.WriteLine($"\nPlease enter a name for this {typeof(T).Name}.");
         if (!ConsoleUtils.GetResponse(out string localName)) return;
 
-        Console.WriteLine($"\nPlease enter an age for this {typeof(T)}.");
+        Console.WriteLine($"\nPlease enter an age for this {typeof(T).Name}");
         if (!ConsoleUtils.GetIntResponse(out int localAge)) return;
 
         T? Animal = (T?)Activator.CreateInstance(typeof(T), localName, localAge);
@@ -37,18 +37,26 @@ class Pen<T>(string name) : Item(name), IPen where T : Animal, new()
         }
     }
 
-    public void ListAllItems()
+    public bool ListAllItems()
     {
+        if (Animals.Count <= 0)
+        {
+            Console.WriteLine("No animals currently exist in this pen.");
+            return false;
+        }
+
         Console.WriteLine(""); // Just a newline for some space 
         for (int i = 0; i < Animals.Count; i++)
         {
             Console.WriteLine($"{i + 1}. {Animals[i].Name}, {Animals[i].Age} years old.");
         }
+
+        return true;
     }
 
     public void HandleListMenu()
     {
-        ListAllItems();
+        if (!ListAllItems()) return;
 
         Console.WriteLine(
             "\n" +
@@ -59,7 +67,7 @@ class Pen<T>(string name) : Item(name), IPen where T : Animal, new()
 
         int res = HandleListSelection();
 
-        if (res != -1)
+        if (res != -1 && res <= Animals.Count)
         {
             HandleMenu(res);
         }
@@ -72,7 +80,7 @@ class Pen<T>(string name) : Item(name), IPen where T : Animal, new()
         // If the user has chosen to exit the application, return to the main menu.
         if (!success) return -1;
 
-        if (response <= Animals.Count + 1)
+        if (response <= Animals.Count)
         {
             // The response is valid, and we will select a pen from the repository.
             return response;
@@ -84,7 +92,7 @@ class Pen<T>(string name) : Item(name), IPen where T : Animal, new()
         }
 
         // Could also do below, but is harder to read + doesn't allow console writing
-        // return (response <= Animals.Count + 1 || !success) ? response : -1;
+        // return (response <= Animals.Count || !success) ? response : -1;
     }
 
     public void HandleMenu(int itemID)

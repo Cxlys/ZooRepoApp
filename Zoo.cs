@@ -1,7 +1,7 @@
 class Zoo : IMenuable
 {
     readonly ZooRepository Repository = new();
-    bool Running;
+    bool Running = true;
 
     public void Run()
     {
@@ -25,36 +25,32 @@ class Zoo : IMenuable
 
     public void HandleSelection(int itemID = -1)
     {
-        bool exit = false;
-        while (!exit)
+        Console.WriteLine("\nPlease make a selection:");
+        bool success = ConsoleUtils.GetIntResponse(out int response);
+
+        if (!success) return;
+
+        switch (response)
         {
-            Console.WriteLine("\nPlease make a selection:");
-            bool success = ConsoleUtils.GetIntResponse(out int response);
+            case 1:
+                Repository.ListAllItems();
+                break;
 
-            if (!success) break;
+            case 2:
+                Repository.HandleListMenu();
+                break;
 
-            switch (response)
-            {
-                case 1:
-                    Repository.ListAllItems();
-                    break;
+            case 3:
+                Repository.AddByUserInput();
+                break;
 
-                case 2:
-                    Repository.HandleListMenu();
-                    break;
+            case -1:
+                Running = false;
+                break;
 
-                case 3:
-                    Repository.AddByUserInput();
-                    break;
-
-                case -1:
-                    exit = true;
-                    break;
-
-                default:
-                    Console.WriteLine("Invalid input, please try again.");
-                    break;
-            }
+            default:
+                Console.WriteLine("Invalid input, please try again.");
+                break;
         }
     }
 

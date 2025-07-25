@@ -14,7 +14,7 @@ static class ConsoleUtils
             {
                 Console.WriteLine("Invalid input, please try again.");
             }
-            else if (input.Equals("X", StringComparison.CurrentCultureIgnoreCase))
+            else if (input.ToUpper() == "X")
             {
                 response = -1;
                 return false;
@@ -42,7 +42,7 @@ static class ConsoleUtils
             {
                 Console.WriteLine("Invalid input, please try again.");
             }
-            else if (input.Equals("X", StringComparison.CurrentCultureIgnoreCase))
+            else if (input.ToUpper() == "X")
             {
                 response = "";
                 return false;
@@ -52,6 +52,33 @@ static class ConsoleUtils
                 response = input;
                 return true;
             }
+        }
+    }
+
+    public static bool CheckValidity(string value)
+    {
+        Console.WriteLine($"\nYou have selected {value}. Would you like to continue? Y/N");
+
+        while (true)
+        {
+            string? input = Console.ReadLine();
+
+            if (input != null)
+            {
+                switch (input.ToUpper())
+                {
+                    case "Y":
+                        return true;
+
+                    case "N":
+                        return false;
+
+                    default:
+                        break;
+                }
+            }
+
+            Console.WriteLine("Invalid input, please try again.");
         }
     }
 }
