@@ -3,11 +3,11 @@ using System.Security.Cryptography.X509Certificates;
 
 static class ConsoleUtils
 {
-    public static bool GetIntResponse(out int response)
+    public static bool GetIntResponse(out int response, bool showStatusText = false)
     {
         while (true)
         {
-            Console.WriteLine("\nPlease type your value below, or \"X\" if you would like to back out:");
+            if (showStatusText) Console.WriteLine("\nPlease type your value below, or \"X\" if you would like to back out:");
             string? input = Console.ReadLine();
 
             if (input == null)
@@ -31,11 +31,11 @@ static class ConsoleUtils
         }
     }
 
-    public static bool GetResponse(out string response)
+    public static bool GetResponse(out string response, bool showStatusText = false)
     {
         while (true)
         {
-            Console.WriteLine("\nPlease type your value below, or \"X\" if you would like to back out:");
+            if (showStatusText) Console.WriteLine("\nPlease type your value below, or \"X\" if you would like to back out:");
             string? input = Console.ReadLine();
 
             if (input == null)

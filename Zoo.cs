@@ -25,8 +25,7 @@ class Zoo : IMenuable
 
     public void HandleSelection(int itemID = -1)
     {
-        Console.WriteLine("\nPlease make a selection:");
-        bool success = ConsoleUtils.GetIntResponse(out int response);
+        bool success = ConsoleUtils.GetIntResponse(out int response, true);
 
         if (!success)
         {

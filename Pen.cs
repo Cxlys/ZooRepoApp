@@ -112,8 +112,7 @@ public class Pen<T>(string name) : Item(name), IPen where T : Animal
     
     public void HandleSelection(int itemID)
     {
-        Console.WriteLine("\nPlease make a selection:");
-        bool success = ConsoleUtils.GetIntResponse(out int response);
+        bool success = ConsoleUtils.GetIntResponse(out int response, true);
 
         if (!success) return;
 
