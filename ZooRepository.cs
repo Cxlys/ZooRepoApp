@@ -85,7 +85,7 @@ class ZooRepository : IListlike, IMenuable
 
     public void HandleMenu(int itemID)
     {
-        Console.WriteLine($"You have selected pen {itemID}: \n{Pens[itemID - 1].Describe()}");
+        Console.WriteLine($"\nYou have selected pen {itemID}: \n{Pens[itemID - 1].Describe()}");
         Console.WriteLine("What would you like to do with this pen?");
         Console.WriteLine("1. List all animals");
         Console.WriteLine("2. Select an animal");
@@ -98,42 +98,37 @@ class ZooRepository : IListlike, IMenuable
 
     public void HandleSelection(int itemID)
     {
-        bool exit = false;
-        while (!exit)
+        Console.WriteLine("\nPlease make a selection:");
+        bool success = ConsoleUtils.GetIntResponse(out int response);
+
+        if (!success) return;
+
+        IPen Pen = Pens[itemID - 1];
+
+        switch (response)
         {
-            Console.WriteLine("\nPlease make a selection:");
-            bool success = ConsoleUtils.GetIntResponse(out int response);
+            case 1:
+                Pen.ListAllItems();
+                break;
 
-            if (!success) break;
+            case 2:
+                Pen.HandleListMenu();
+                break;
 
-            IPen Pen = Pens[itemID - 1];
+            case 3:
+                Pen.AddByUserInput();
+                break;
 
-            switch (response)
-            {
-                case 1:
-                    Pen.ListAllItems();
-                    break;
+            case 5:
+                Pens.RemoveAt(itemID - 1);
+                break;
 
-                case 2:
-                    Pen.HandleListMenu();
-                    break;
+            case -1:
+                return;
 
-                case 3:
-                    Pen.AddByUserInput();
-                    break;
-
-                case 5:
-                    Pens.RemoveAt(itemID - 1);
-                    break;
-
-                case -1:
-                    exit = true;
-                    break;
-
-                default:
-                    Console.WriteLine("Invalid input, please try again.");
-                    break;
-            }
+            default:
+                Console.WriteLine("Invalid input, please try again.");
+                break;
         }
     }
 }

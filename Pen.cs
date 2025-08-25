@@ -112,47 +112,42 @@ public class Pen<T>(string name) : Item(name), IPen where T : Animal
     
     public void HandleSelection(int itemID)
     {
-        bool exit = false;
-        while (!exit)
+        Console.WriteLine("\nPlease make a selection:");
+        bool success = ConsoleUtils.GetIntResponse(out int response);
+
+        if (!success) return;
+
+        int animalIndex = itemID - 1;
+        T animal = Animals[animalIndex];
+
+        switch (response)
         {
-            Console.WriteLine("\nPlease make a selection:");
-            bool success = ConsoleUtils.GetIntResponse(out int response);
+            case 1:
+                animal.ChangeNameByInput();
+                break;
 
-            if (!success) break;
+            case 2:
+                animal.ChangeAgeByInput();
+                break;
 
-            int animalIndex = itemID - 1;
-            T animal = Animals[animalIndex];
+            case 3:
+                animal.Eat();
+                break;
 
-            switch (response)
-            {
-                case 1:
-                    animal.ChangeNameByInput();
-                    break;
+            case 4:
+                animal.Speak();
+                break;
 
-                case 2:
-                    animal.ChangeAgeByInput();
-                    break;
+            case 5:
+                Animals.RemoveAt(animalIndex);
+                break;
 
-                case 3:
-                    animal.Eat();
-                    break;
+            case -1:
+                return;
 
-                case 4:
-                    animal.Speak();
-                    break;
-
-                case 5:
-                    Animals.RemoveAt(animalIndex);
-                    break;
-
-                case -1:
-                    exit = true;
-                    break;
-
-                default:
-                    Console.WriteLine("Invalid input, please try again.");
-                    continue;
-            }
+            default:
+                Console.WriteLine("Invalid input, please try again.");
+                break;
         }
     }
 }

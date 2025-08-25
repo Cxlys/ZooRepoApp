@@ -28,30 +28,30 @@ class Zoo : IMenuable
         Console.WriteLine("\nPlease make a selection:");
         bool success = ConsoleUtils.GetIntResponse(out int response);
 
-        if (!success) return;
+        if (!success)
+        {
+            Running = false;
+            return;
+        }
 
         switch (response)
-        {
-            case 1:
-                Repository.ListAllItems();
-                break;
+            {
+                case 1:
+                    Repository.ListAllItems();
+                    break;
 
-            case 2:
-                Repository.HandleListMenu();
-                break;
+                case 2:
+                    Repository.HandleListMenu();
+                    break;
 
-            case 3:
-                Repository.AddByUserInput();
-                break;
+                case 3:
+                    Repository.AddByUserInput();
+                    break;
 
-            case -1:
-                Running = false;
-                break;
-
-            default:
-                Console.WriteLine("Invalid input, please try again.");
-                break;
-        }
+                default:
+                    Console.WriteLine("Invalid input, please try again.");
+                    break;
+            }
     }
 
 }
