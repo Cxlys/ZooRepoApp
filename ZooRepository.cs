@@ -85,22 +85,27 @@ class ZooRepository : IListlike, IMenuable
 
     public void HandleMenu(int itemID)
     {
-        Console.WriteLine($"\nYou have selected pen {itemID}: \n{Pens[itemID - 1].Describe()}");
-        Console.WriteLine("What would you like to do with this pen?");
-        Console.WriteLine("1. List all animals");
-        Console.WriteLine("2. Select an animal");
-        Console.WriteLine("3. Add a new animal");
-        Console.WriteLine("5. Delete this pen");
-        Console.WriteLine("X. Return to the main menu.");
+        bool finished = false;
 
-        HandleSelection(itemID);
+        while (!finished)
+        {
+            Console.WriteLine($"\nYou have selected pen {itemID}: \n{Pens[itemID - 1].Describe()}");
+            Console.WriteLine("What would you like to do with this pen?");
+            Console.WriteLine("1. List all animals");
+            Console.WriteLine("2. Select an animal");
+            Console.WriteLine("3. Add a new animal");
+            Console.WriteLine("5. Delete this pen");
+            Console.WriteLine("X. Return to the main menu.");
+
+            finished = HandleSelection(itemID);
+        }
     }
 
-    public void HandleSelection(int itemID)
+    public bool HandleSelection(int itemID)
     {
         bool success = ConsoleUtils.GetIntResponse(out int response, true);
 
-        if (!success) return;
+        if (!success) return true;
 
         IPen Pen = Pens[itemID - 1];
 
@@ -119,15 +124,22 @@ class ZooRepository : IListlike, IMenuable
                 break;
 
             case 5:
-                Pens.RemoveAt(itemID - 1);
+                if (ConsoleUtils.CheckValidity($"to remove {Pens[itemID - 1].Describe()}"))
+                {
+                    Pens.RemoveAt(itemID - 1);
+                    return true;
+                }
+
                 break;
 
             case -1:
-                return;
+                return true;
 
             default:
                 Console.WriteLine("Invalid input, please try again.");
                 break;
         }
+
+        return false;
     }
 }

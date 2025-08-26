@@ -97,24 +97,29 @@ public class Pen<T>(string name) : Item(name), IPen where T : Animal
 
     public void HandleMenu(int itemID)
     {
-        Console.WriteLine($"\nYou have selected animal {itemID}.");
-        Console.WriteLine($"Name: {Animals[itemID - 1].Name}, Age: {Animals[itemID - 1].Age}");
-        Console.WriteLine("What would you like to do with this animal?");
-        Console.WriteLine("1. Change its name");
-        Console.WriteLine("2. Change its age");
-        Console.WriteLine("3. Eat!");
-        Console.WriteLine("4. Speak!");
-        Console.WriteLine("5. Delete this animal");
-        Console.WriteLine("X. Return to the main menu.");
+        bool finished = false;
 
-        HandleSelection(itemID);
+        while (!finished)
+        {
+            Console.WriteLine($"\nYou have selected animal {itemID}.");
+            Console.WriteLine($"Name: {Animals[itemID - 1].Name}, Age: {Animals[itemID - 1].Age}");
+            Console.WriteLine("What would you like to do with this animal?");
+            Console.WriteLine("1. Change its name");
+            Console.WriteLine("2. Change its age");
+            Console.WriteLine("3. Eat!");
+            Console.WriteLine("4. Speak!");
+            Console.WriteLine("5. Delete this animal");
+            Console.WriteLine("X. Return to pen selection.");
+
+            finished = HandleSelection(itemID);
+        }
     }
-    
-    public void HandleSelection(int itemID)
+
+    public bool HandleSelection(int itemID)
     {
         bool success = ConsoleUtils.GetIntResponse(out int response, true);
 
-        if (!success) return;
+        if (!success) return true;
 
         int animalIndex = itemID - 1;
         T animal = Animals[animalIndex];
@@ -138,15 +143,22 @@ public class Pen<T>(string name) : Item(name), IPen where T : Animal
                 break;
 
             case 5:
-                Animals.RemoveAt(animalIndex);
+                if (ConsoleUtils.CheckValidity($"to remove {animal.Name}, of age {animal.Age}"))
+                {
+                    Animals.RemoveAt(animalIndex);
+                    return true;
+                }
+
                 break;
 
             case -1:
-                return;
+                return true;
 
             default:
                 Console.WriteLine("Invalid input, please try again.");
                 break;
         }
+
+        return false;
     }
 }

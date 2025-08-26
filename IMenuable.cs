@@ -1,6 +1,6 @@
 public interface IMenuable
 {
     public void HandleMenu(int itemID);
-    public void HandleSelection(int itemID);
+    public bool HandleSelection(int itemID);
 
 }
