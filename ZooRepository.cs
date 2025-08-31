@@ -31,7 +31,7 @@ class ZooRepository : IListlike, IMenuable
         if (!Item.SelectType(out Type? chosenSpecies) || chosenSpecies == null || !ConsoleUtils.CheckValidity($"{localName}, and {chosenSpecies.Name}")) return;
 
         Type genericType = typeof(Pen<>).MakeGenericType(chosenSpecies);
-        IPen? pen = (IPen?) Activator.CreateInstance(genericType, localName);
+        IPen? pen = (IPen?)Activator.CreateInstance(genericType, localName);
 
         if (pen == null) return;
 
@@ -141,5 +141,10 @@ class ZooRepository : IListlike, IMenuable
         }
 
         return false;
+    }
+
+    public List<IPen> GetPenList()
+    {
+        return Pens;
     }
 }

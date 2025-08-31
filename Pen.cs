@@ -6,9 +6,28 @@ public class Pen<T>(string name) : Item(name), IPen where T : Animal
 {
     readonly List<T> Animals = [];
 
+    public string GetName() => Name;
+
+    public Type GetGenericType()
+    {
+        return typeof(T);
+    }
+
     public string Describe()
     {
         return $"{Name}, containing {Animals.Count} animals of type {typeof(T).Name}";
+    }
+
+    public string DescribeSeparated()
+    {
+        StringWriter buffer = new();
+
+        foreach (T animal in Animals)
+        {
+            buffer.WriteLine($"{animal.Name}, {animal.Age}");
+        }
+
+        return buffer.ToString();
     }
 
     public void AddByUserInput()
