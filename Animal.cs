@@ -3,7 +3,7 @@ using System.Reflection;
 
 public abstract class Animal(string name, int age) : Item(name), IEats, ISpeaks
 {
-    public int Age = age;
+    public int Age { get; set; } = age;
 
     public void Eat()
     {

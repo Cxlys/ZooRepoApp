@@ -4,7 +4,9 @@ using System.Security.Cryptography;
 
 public class Pen<T>(string name) : Item(name), IPen where T : Animal
 {
-    readonly List<T> Animals = [];
+    public List<T> Animals { get; private set; } = [];
+
+    public string? GenericType => typeof(T).FullName;
 
     public string GetName() => Name;
 
