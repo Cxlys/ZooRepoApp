@@ -4,9 +4,9 @@
 
 ## About
 This application simulates a basic zoo management system built in C# as a console app. It showcases:
-- Object-oriented design
-- Interfaces
+- Object-oriented design (i.e. Interface design, Factory pattern)
 - Menu-driven UI for user interaction
+- Saving I/O system using JSON libraries in .NET
 - Clean code practice
 
 It is intended to be a learning and demonstration tool for my **C# and .NET design**.
@@ -18,6 +18,7 @@ I am also using it as a springboard to learn **Git** development on the command 
 - You can add new animals with a name and age
 - Navigate menus of the application using keyboard input
 - Strong separation of concerns (Zoo, ZooRepository, Animal, Pen) etc. grouped into clean interfaces (IMenuable, IListlike)
+- Tou can save your data using a seamless saving I/O system with customisable file names
 
 ## Tech Stack
 - **Language**: C# (.NET 8)
@@ -45,10 +46,13 @@ Welcome to the Zoo app!
 Please select an option:
 1. List all pens
 2. Select a pen
+3. Add a pen
+4. Save your zoo
+5. Load a zoo
 X. Exit the application
 ```
 
 ## Design Principles
-This project looks to demonstrate several key programming concepts, such as polymorphism (through overriden animal behaviour), abstraction (with core methods exposed with interfaces), encapsulation (by hiding zoo logic in the ZooRepository class) and inheritance (via the hierarchy of Animal types). 
+This project looks to demonstrate several key programming concepts, such as polymorphism (through overriden animal behaviour), abstraction (with core methods exposed with interfaces), encapsulation (by hiding zoo logic in the ZooRepository class) and inheritance (via the hierarchy of Animal types). Furthermore, Factory design patterns are used for the generic typing used in the Pen<T> class.
 
-It also shows a strong separation of concern, with each part of the process (Zoo -> Main Menu, ZooRepository -> Pens Menu, Pen -> Animals Menu).,
+It also shows strong separation of concerns, with each part of the process being modular (Zoo -> Main Menu, ZooRepository -> Pens Menu, Pen -> Animals Menu), aiding seamless editing and updates.
