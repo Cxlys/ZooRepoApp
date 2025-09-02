@@ -2,9 +2,12 @@ using System.Net;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 
-public class Pen<T>(string name) : Item(name), IPen where T : Animal
+public class Pen<T> : Item, IPen where T : Animal
 {
     public List<T> Animals { get; private set; } = [];
+
+    public Pen(string name) : base(name) { }
+    public Pen(string name, List<T> animals) : base(name) => Animals = animals;
 
     public string? GenericType => typeof(T).FullName;
 

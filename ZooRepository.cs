@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using System.ComponentModel.Design;
 using System.Reflection;
 
@@ -39,11 +40,7 @@ class ZooRepository : IListlike, IMenuable
         Console.WriteLine($"Successfully added {localName}"!);
     }
 
-    void AddNewPen<T>(string name) where T : Animal, new()
-    {
-        Pen<T> pen = new(name);
-        Pens.Add(pen);
-    }
+    void AddNewPen(IPen pen) => Pens.Add(pen);
 
     public void HandleListMenu()
     {
@@ -146,5 +143,20 @@ class ZooRepository : IListlike, IMenuable
     public List<IPen> GetPenList()
     {
         return Pens;
+    }
+
+    public void SetPenList(List<IPen> pens)
+    {
+        // Error handling
+        // ...
+
+        // If error handling is OK, clear for data...
+        Pens.Clear();
+
+        // Loop to add to readonly data
+        foreach (IPen pen in pens)
+        {
+            Pens.Add(pen);
+        }
     }
 }
